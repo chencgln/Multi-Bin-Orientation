@@ -50,7 +50,7 @@ class OrienDecoder():
         # Find number of anchors
         anchors = tf.reduce_sum(tf.square(label_offset), axis=2)
         anchors = tf.greater(anchors, tf.constant(0.5))
-        anchors = tf.reduce_sum(tf.cast(anchors, tf.float32), 1)
+        anchors = tf.reduce_sum(tf.cast(anchors, tf.float32), axis=1)
 
         # Define the loss
         loss = (label_offset[:,:,0]*offset_output[:,:,0] + label_offset[:,:,1]*offset_output[:,:,1])

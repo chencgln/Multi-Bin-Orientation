@@ -55,12 +55,6 @@ def train(config):
     
     with tf.name_scope('savers'):
         loader = tf.train.Saver(tf.global_variables())
-        # self.loader = tf.train.Saver(var_list=tf.contrib.framework.get_variables_to_restore(exclude=["learning_rate"]))
-        # self.loader = tf.train.Saver(var_list=tf.contrib.framework.get_variables_to_restore(exclude=["learning_rate", "yolov3/featuremap*", "train_op"]))
-        # self.loader = tf.train.Saver(var_list=tf.contrib.framework.get_variables_to_restore(exclude=["learning_rate",
-        #                                                                         "yolov3/.*Adam.*", "yolov3/.*ExponentialMovingAverage.*"]))
-        # loader = tf.train.Saver(var_list=tf.contrib.framework.get_variables_to_restore(exclude=["learning_rate", "darknet/.*Adam.*", 
-        #                                                                                             "darknet/.*ExponentialMovingAverage.*"]))
         saver  = tf.train.Saver(tf.global_variables(), max_to_keep=5)
 
     sess_config = tf.ConfigProto(allow_soft_placement=True)
