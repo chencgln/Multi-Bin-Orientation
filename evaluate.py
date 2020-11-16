@@ -35,21 +35,7 @@ def evaluate(config):
     with tf.name_scope('model'):
         model = OrienDecoder(trainable, "darknet53")
         tf_pred_conf, tf_pred_off = model.forward(input_data)
-    # """
-    # :param input_checkpoint:
-    # :return:
-    # """
-    # saver = tf.train.import_meta_graph(config.checkpoint_path + '.meta', clear_devices=True)
-    # graph = tf.get_default_graph()
-    # input_graph_def = graph.as_graph_def()
-    # with tf.Session() as sess:
-    #     saver.restore(sess, config.checkpoint_path)
-    #     output_graph_def = tf.graph_util.convert_variables_to_constants(
-    #         sess=sess,
-    #         input_graph_def=input_graph_def,
-    #         output_node_names=[var.name[:-2] for var in tf.global_variables()])
-    #     for var in tf.global_variables():
-    #         print(var.name[:-2])
+
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
         saver = tf.train.Saver()#ema_obj.variables_to_restore())
         saver.restore(sess, config.checkpoint_path)
@@ -67,19 +53,6 @@ def evaluate(config):
             print(label_confs, label_offs)
             pred_conf, pred_off = sess.run([tf_pred_conf, tf_pred_off], feed_dict={input_data: roi, trainable: False})
             print(pred_conf, pred_off)
-                    
-# def do_inference(sess, eval_list):
-#     with open(config.eval_file_list, 'r') as lf:
-#         for num, line in enumerate(lf):
-#     # for _ in range(1):
-#     # data_dir = "/data/cgl/tf_yolo_gitlab/tensorflow_yolov3/yyang_data"
-#     # for root, dirs, files in os.walk(data_dir):
-#     #     for ff in files:
-#     #         if ff[-4:]!=".jpg":
-#     #             continue
-#             # annotation = [os.path.join(root, ff)]
-#             annotation = line.strip().split()
-#             if len(annotation)==2:
 
 if __name__ == '__main__': 
     evaluate(Configs())
